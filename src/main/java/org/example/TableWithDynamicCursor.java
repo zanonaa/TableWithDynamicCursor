@@ -114,12 +114,6 @@ public class TableWithDynamicCursor {
 
     }
 
-
-    Object createUnoInstanceToCurrentDocument(final XTextDocument xDoc, String className, Object... args) throws Exception {
-        final XMultiServiceFactory xDocFactory = queryInterface(XMultiServiceFactory.class, xDoc);
-        return xDocFactory.createInstanceWithArguments(className, args);
-    }
-
     static XTextField insertField(final XTextDocument xTextDocument, XTextRange xTextRange, String name, String value) throws Exception {
         final XTextFieldsSupplier xTextFieldsSupplier = queryInterface(XTextFieldsSupplier.class, xTextDocument);
 

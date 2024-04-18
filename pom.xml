@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>TableWithDynamicCursor</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.org.libreoffice>7.3.7</version.org.libreoffice>
+    </properties>
+<dependencies>
+
+    <dependency>
+        <groupId>org.libreoffice</groupId>
+        <artifactId>libreoffice</artifactId>
+        <version>${version.org.libreoffice}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.libreoffice</groupId>
+        <artifactId>ridl</artifactId>
+        <version>${version.org.libreoffice}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.libreoffice</groupId>
+        <artifactId>unoil</artifactId>
+        <version>${version.org.libreoffice}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.libreoffice</groupId>
+        <artifactId>juh</artifactId>
+        <version>${version.org.libreoffice}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.libreoffice</groupId>
+        <artifactId>jurt</artifactId>
+        <version>${version.org.libreoffice}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.libreoffice</groupId>
+        <artifactId>unoloader</artifactId>
+        <version>${version.org.libreoffice}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.github.jeremysolarz</groupId>
+        <artifactId>bootstrap-connector</artifactId>
+        <version>1.0.0</version>
+<!--        <exclusions>-->
+<!--            <exclusion>-->
+<!--                <groupId>org.libreoffice</groupId>-->
+<!--                <artifactId>*</artifactId>-->
+<!--            </exclusion>-->
+<!--        </exclusions>-->
+    </dependency>
+
+</dependencies>
+</project>

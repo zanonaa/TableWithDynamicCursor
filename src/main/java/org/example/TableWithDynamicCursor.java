@@ -33,7 +33,7 @@ import static com.sun.star.uno.UnoRuntime.queryInterface;
 public class TableWithDynamicCursor {
 
     static final String DOCUMENT_PATH = "document_with_table.odt";
-    static final String LIBREOFFICE_PATH = "/opt/libreoffice7.3/program/";
+    static final String LIBREOFFICE_PATH = "/opt/libreoffice7.4/program/";
 
     public static void main(String[] args) throws Exception {
         // When Cinnamon runs with args -Djdk.gtk.version=2
@@ -76,7 +76,7 @@ public class TableWithDynamicCursor {
         XTextTable xTextTable = queryInterface(XTextTable.class, textTable);
 
         // getRangeFromTable
-        final XTextRange xStartTable = xTextTable.getAnchor().getStart();
+        final XTextRange xStartTable = xTextTable.getAnchor().getStart(); // XTextTable::getStart is *not* a specific position in text, and it can't be used in the XTextViewCursor::gotoRange call
         final XTextRange xEndTable = xTextTable.getAnchor().getEnd();
 
         // creates a view cursor from current cursor
@@ -91,6 +91,16 @@ public class TableWithDynamicCursor {
         // moves the cursor to the line right before the table
         textViewCursor.gotoRange(xStartTable, false);
 
+        /* Suggested correction: add the following while loop.
+        * This makes sure that if textViewCursor ended up inside the table, it moves outside.
+        * More explanation at https://bugs.documentfoundation.org/show_bug.cgi?id=160784
+        * */
+        while (textViewCursor.getText() != xText)
+        {
+            textViewCursor.goLeft((short)1, false);
+        }
+        /* end */
+
         // moves the cursor to the end of the line right before the table
         lineCursor.gotoEndOfLine(false);
         xCursor.gotoRange(textViewCursor.getStart(), false);
@@ -99,8 +109,15 @@ public class TableWithDynamicCursor {
         insertField(xCurrentTextDocument,xParagraphCursor.getStart(), "begin", "any");
 
         // moves the cursor to the line right after the table
-        textViewCursor.gotoRange(xEndTable, false);
-        textViewCursor.gotoEnd(false);
+        //textViewCursor.gotoRange(xEndTable, false); // removing line as suggested
+        //textViewCursor.gotoEnd(false); // removing line as suggested
+        /* Suggested correction: replace the two lines above with the line below.
+        * This selects the just-selected filed before the table, and also the next object - which is the table (which can only be selected as a whole).
+        * This makes the end of the selection to be immediately after the table.
+        * More explanation at https://bugs.documentfoundation.org/show_bug.cgi?id=160784
+        * */
+        textViewCursor.goRight((short)2, true);
+        /* End of the suggested correction */
 
         // moves the cursor to the beginning of the line right after the table
         lineCursor.gotoStartOfLine(false);
